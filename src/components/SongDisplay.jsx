@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { nextLyric, restartSong } from './../actions';
 
+
 const SongDisplay = ({ dispatch, song }) => {
   const { title, artist, songArray, arrayPosition, id } = song;
   const currentLine = songArray[arrayPosition];
@@ -15,7 +16,8 @@ const SongDisplay = ({ dispatch, song }) => {
         e.preventDefault();
         if(!(arrayPosition === songArray.length - 1)) {
 
-          // The below action creator  function calls replace the commented out actions. The    // action creators are coded in the actions directory and imported into this 
+          // The below action creator  function calls replace the commented out actions. The    
+          // action creators are coded in the actions directory and imported into this 
           // module.
 
           dispatch(nextLyric(id));
@@ -26,13 +28,7 @@ const SongDisplay = ({ dispatch, song }) => {
           // dispatch(action);
 
         } else {
-
           dispatch(restartSong(id));
-          // action = {
-          //   type: 'RESTART_SONG',
-          //   currentSongId: id
-          // };
-          // dispatch(action);
         }
       }}>
         <h1>
@@ -42,6 +38,7 @@ const SongDisplay = ({ dispatch, song }) => {
     </div>
   );
 };
+
 
 SongDisplay.propTypes = {
   song: PropTypes.object,
@@ -53,19 +50,31 @@ SongDisplay.propTypes = {
   dispatch: PropTypes.func
 };
 
+
 const mapStateToProps = state => {
+  let info;
   const song = state.songsById[state.currentSongId];
-  const songInfo = {
-    id: song.songId,
-    artist: song.artist,
-    title: song.title,
-    songArray: song.songArray,
-    arrayPosition: song.arrayPosition
-  };
+  if (!state.songsById[state.currentSongId].isFetching) {
+    info = {
+      id: state.currentSongId,
+      artist: song.artist,
+      title: song.title,
+      songArray: song.songArray,
+      arrayPosition: song.arrayPosition
+    };
+  } else {
+    info = {
+      artist:'',
+      title: '',
+      songArray: '',
+      arrayPosition: ''
+    };
+  }
   return {
-    song: songInfo
+    song: info
   };
 };
+
 
 export default connect(mapStateToProps)(SongDisplay);
 

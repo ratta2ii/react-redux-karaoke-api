@@ -23,7 +23,7 @@ const lyricChangeReducer = (state = initialState.songsById, action) => {
       });
       return newSongsByIdStateSlice;
 
-    // This has to do with the API Call 
+    // This is requesting song from the API Call 
 
     case types.REQUEST_SONG:
       newSongsByIdEntry = {
@@ -31,6 +31,24 @@ const lyricChangeReducer = (state = initialState.songsById, action) => {
         title: action.title,
         songId: action.songId
       };
+      newSongsByIdStateSlice = Object.assign({}, state, {
+        [action.songId]: newSongsByIdEntry
+      });
+      return newSongsByIdStateSlice;
+
+    // This is recieving song from the API
+    
+    case types.RECEIVE_SONG:
+      console.log("I am in the RECIEVE_SONG case of the lyrics reducer-------------------------: " + state[action.songId].songId);
+      newSongsByIdEntry = Object.assign({}, state[action.songId], {
+        isFetching: false,
+        receivedAt: action.receivedAt,
+        title: action.title,
+        artist: action.artist,
+        songArray: action.songArray,
+        arrayPosition: 0,
+        songId: action.songId
+      });
       newSongsByIdStateSlice = Object.assign({}, state, {
         [action.songId]: newSongsByIdEntry
       });
