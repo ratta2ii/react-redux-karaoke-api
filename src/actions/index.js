@@ -20,11 +20,9 @@ export const changeSong = (newSelectedSongId) => ({
 
 // ------------- The functions below have to do with API Call -------------
 
-
 // When an action creator returns a function, that function will get executed by the Redux Thunk middleware. This function doesn't 
 // need to be pure; it is thus allowed to have side effects, including executing asynchronous API calls. The function can also 
 // dispatch actions... EXAMPLE: return function(dispatch) {
-
 
 // First API Call to retrieve sing and capture the ID
 
@@ -59,7 +57,6 @@ export const requestSong = (title, localSongId) => ({
 
 
 // Second API that matches the ID from first API call in order to recieve Lyrics
-
 
 export function fetchLyrics(title, artist, musicMatchId, localSongId, dispatch) {
 
